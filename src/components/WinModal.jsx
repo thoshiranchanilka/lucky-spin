@@ -87,7 +87,7 @@ const WinModal = ({ isOpen, prize, onClose }) => {
     const lower = label.toLowerCase();
     
     if (lower.includes('living') || lower.includes('cost')) return "Living Cost Cover for China";
-    if (lower.includes('scholarship')) return "Full University Tuition Support";
+    if (lower.includes('scholarship')) return "University Tuition Support";
     if (lower.includes('flight') || lower.includes('ticket')) return "One-Way Air Ticket to China";
     if (lower.includes('laptop') || lower.includes('mac')) return "High-Performance Study Laptop";
     if (lower.includes('cash') || lower.includes('money')) return "Cash Prize for You";
