@@ -13,13 +13,9 @@ const SpinWheel = ({ prizes }) => {
 
   useEffect(() => {
     const handleResize = () => {
-      // If screen is less than 768px (mobile), use smaller wheel
       setWheelSize(window.innerWidth < 768 ? 320 : 500);
     };
-
-    // Set initial size
     handleResize();
-
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -27,6 +23,7 @@ const SpinWheel = ({ prizes }) => {
   // --- AUDIO SYSTEM ---
   const tickAudio = useRef(null);
   const winAudio = useRef(null);
+  const failAudio = useRef(null); // New audio ref for Try Again
   const startAudio = useRef(null);
   
   const lastSegmentRef = useRef(-1);
@@ -38,12 +35,17 @@ const SpinWheel = ({ prizes }) => {
     winAudio.current = new Audio('/win.mp3');
     winAudio.current.volume = 0.8;
 
+    // Initialize Fail Audio
+    failAudio.current = new Audio('/fail.mp3');
+    failAudio.current.volume = 0.6;
+
     startAudio.current = new Audio('/spin-start.mp3');
     startAudio.current.volume = 0.6;
 
     return () => {
         if(tickAudio.current) { tickAudio.current.pause(); }
         if(winAudio.current) { winAudio.current.pause(); }
+        if(failAudio.current) { failAudio.current.pause(); }
     };
   }, []);
 
@@ -58,6 +60,13 @@ const SpinWheel = ({ prizes }) => {
     if (winAudio.current) {
         winAudio.current.currentTime = 0;
         winAudio.current.play().catch(e => console.error("Win audio failed:", e));
+    }
+  };
+
+  const playFail = () => {
+    if (failAudio.current) {
+        failAudio.current.currentTime = 0;
+        failAudio.current.play().catch(e => console.error("Fail audio failed:", e));
     }
   };
 
@@ -100,7 +109,6 @@ const SpinWheel = ({ prizes }) => {
 
   const numSegments = prizes.length;
   const segmentAngle = 360 / numSegments;
-  // wheelSize is now state-driven
   const radius = wheelSize / 2;
   const center = wheelSize / 2;
 
@@ -113,21 +121,55 @@ const SpinWheel = ({ prizes }) => {
         startAudio.current.play().catch(() => {});
     }
 
-    if (winAudio.current) { winAudio.current.play().then(() => winAudio.current.pause()).catch(() => {}); }
-    if (tickAudio.current) { tickAudio.current.play().then(() => tickAudio.current.pause()).catch(() => {}); }
-
+    // Reset sounds
+    if (winAudio.current) { winAudio.current.pause(); winAudio.current.currentTime = 0; }
+    if (failAudio.current) { failAudio.current.pause(); failAudio.current.currentTime = 0; }
+    
     setIsSpinning(true);
     setWinner(null);
     lastSegmentRef.current = -1; 
 
-    const winningIndex = Math.floor(Math.random() * numSegments); 
-    const spinDuration = 4.5;
-    const fullRotation = 360 * 6; 
-    const targetAngle = 360 - (winningIndex * segmentAngle) - (segmentAngle / 2);
+    // --- RARITY SYSTEM ---
+    const tryAgainIndices = [];
+    const otherIndices = [];
     
+    prizes.forEach((p, index) => {
+        if (p.label.replace(/\s/g, '').toLowerCase() === 'tryagain') {
+            tryAgainIndices.push(index);
+        } else {
+            otherIndices.push(index);
+        }
+    });
+
+    let winningIndex;
+    const randomChance = Math.random(); 
+
+    // 40% chance for TryAgain
+    if (tryAgainIndices.length > 0 && randomChance < 0.4) {
+        const randomIndex = Math.floor(Math.random() * tryAgainIndices.length);
+        winningIndex = tryAgainIndices[randomIndex];
+    } else {
+        const randomIndex = Math.floor(Math.random() * otherIndices.length);
+        winningIndex = otherIndices[randomIndex];
+    }
+    
+    // --- ROTATION MATH ---
+    const segmentCenterAngle = (winningIndex * segmentAngle) + (segmentAngle / 2);
+    const targetRotationPosition = 360 - segmentCenterAngle;
     const currentRotation = rotationRef.current;
-    const newTotalRotation = currentRotation + fullRotation + targetAngle;
+    const currentOffset = currentRotation % 360; 
+    
+    let distanceToTarget = targetRotationPosition - currentOffset;
+    
+    if (distanceToTarget < 0) {
+        distanceToTarget += 360;
+    }
+
+    const extraSpins = 360 * 6;
+    const newTotalRotation = currentRotation + extraSpins + distanceToTarget;
     rotationRef.current = newTotalRotation;
+
+    const spinDuration = 4.5;
 
     await controls.start({
       rotate: newTotalRotation,
@@ -135,8 +177,17 @@ const SpinWheel = ({ prizes }) => {
     });
 
     setIsSpinning(false);
-    setWinner(prizes[winningIndex]);
-    playWin(); 
+    
+    const finalPrize = prizes[winningIndex];
+    setWinner(finalPrize);
+
+    // --- CONDITIONAL SOUND ---
+    const isTryAgain = finalPrize.label.toLowerCase().includes('tryagain');
+    if (isTryAgain) {
+        playFail(); // Play fail sound
+    } else {
+        playWin(); // Play win sound
+    }
   };
 
   const handleUpdate = (latest) => {
@@ -173,7 +224,6 @@ const SpinWheel = ({ prizes }) => {
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
-        {/* Glow - scaled for mobile */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] md:w-[550px] h-[350px] md:h-[550px] bg-red-500 opacity-5 blur-[60px] md:blur-[80px] rounded-full pointer-events-none z-0"></div>
 
         <motion.div 
