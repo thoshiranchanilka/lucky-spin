@@ -95,7 +95,7 @@ const SpinWheel = ({ prizes }) => {
     if (lower.includes('living') || lower.includes('cost')) return '🏠';
     if (lower.includes('surprise') || lower.includes('mystery')) return '✨';
     if (lower.includes('phone') || lower.includes('mobile')) return '📱';
-    return '⭐'; 
+    return '😓'; 
   };
 
   const numSegments = prizes.length;
