@@ -54,7 +54,7 @@ const WinModal = ({ isOpen, prize, onClose }) => {
   const getIcon = (label) => {
     if (!label) return '🎉';
     const lower = label.toLowerCase();
-    if (lower.includes('try') || lower.includes('again')) return '💫';
+    if (lower.includes('try') || lower.includes('again')) return '😓';
     if (lower.includes('cash') || lower.includes('money')) return '💰';
     if (lower.includes('scholarship') || lower.includes('edu')) return '🎓';
     if (lower.includes('laptop') || lower.includes('mac')) return '💻';
