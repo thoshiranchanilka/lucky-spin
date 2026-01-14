@@ -155,45 +155,43 @@ const sparkles = Array.from({ length: 30 }).map(() => ({
 
     <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_40%,#F9F7F2_100%)] z-0 pointer-events-none"></div>
 
-    <div class="z-20 text-center mb-4 md:mb-8 relative mt-10 md:mt-0">
-      <div class="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-1.5 mb-4 md:mb-6 border border-red-100 rounded-full bg-white/80 backdrop-blur-sm shadow-sm hover:shadow-md transition-all">
+    <div class="z-20 text-center mb-2 md:mb-6 relative mt-4 md:mt-0">
+      <div class="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-1.5 mb-2 md:mb-4 border border-red-100 rounded-full bg-white/80 backdrop-blur-sm shadow-sm hover:shadow-md transition-all">
         <span class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-red-600 animate-pulse shadow-[0_0_8px_rgba(220,38,38,0.5)]"></span>
-        <span class="text-red-800 text-[8px] md:text-[10px] tracking-[0.2em] uppercase font-bold font-sans">Official Scholarship Portal</span>
+        <span class="text-red-800 text-[7px] md:text-[9px] tracking-[0.2em] uppercase font-bold font-sans">Official Scholarship Portal</span>
       </div>
 
       <div class="mb-2 md:mb-4 relative z-10 flex justify-center">
         <img 
             src="/logo.svg" 
             alt="EduQuest China" 
-            class="h-14 md:h-24 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-500"
+            class="h-12 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-500"
         />
       </div>
      
-      <p class="text-gray-400 text-[10px] md:text-xs tracking-[0.25em] md:tracking-[0.4em] uppercase font-medium mt-2 font-sans">
+      <p class="text-gray-400 text-[9px] md:text-[11px] tracking-[0.25em] md:tracking-[0.4em] uppercase font-medium mt-1 font-sans">
         Your Journey to China Begins Here
       </p>
     </div>
 
-    <div class="z-20 relative pb-32 md:pb-20">
+    <div class="z-20 relative pb-20 md:pb-16">
       <SpinWheel client:only="react" prizes={prizes} />
     </div>
 
-    <div class="absolute bottom-4 flex flex-col items-center gap-3 z-30 opacity-60">
-       <p class="text-[8px] md:text-[9px] text-gray-400 font-sans uppercase tracking-widest">Powered by EduQuest</p>
+    <div class="absolute bottom-8 flex flex-col items-center gap-3 z-30 opacity-60">
+       <p class="text-[8px] md:text-[9px] text-white font-sans uppercase tracking-widest">Powered by EduQuest</p>
     </div>
 
   </main>
 </Layout>
 
 <style>
-  /* IMPORT LATO FONT */
   @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
 
   :global(body) {
     font-family: 'Lato', sans-serif;
   }
 
-  /* GRID ANIMATION */
   #grid-bg {
     background-size: 50px 50px;
     background-image:
@@ -221,7 +219,6 @@ const sparkles = Array.from({ length: 30 }).map(() => ({
   .animate-drift-fast { animation: drift 8s ease-in-out infinite; }
   .animate-drift-fast-reverse { animation: drift 10s ease-in-out infinite reverse; }
 
-  /* TWINKLE */
   @keyframes twinkle {
     0%, 100% { opacity: 0; transform: scale(0.5); }
     50% { opacity: 1; transform: scale(1.2); }

@@ -110,35 +110,36 @@ const WinModal = ({ isOpen, prize, onClose }) => {
         >
           {/* BACKDROP */}
           <div 
-            className="absolute inset-0 bg-black/40 backdrop-blur-[4px]"
+            className="absolute inset-0 bg-black/50 backdrop-blur-[5px]"
             onClick={onClose}
           />
 
           <motion.div 
-            className="relative w-full max-w-sm text-center"
+            className="relative w-full max-w-md text-center"
             initial={{ scale: 0.8, opacity: 0, y: 50 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
           >
             
-            {/* --- FLOATING BADGE --- */}
-            <div className="absolute -top-12 left-1/2 -translate-x-1/2 z-30">
-                <div className={`w-24 h-24 rounded-full p-1 bg-gradient-to-b ${isTryAgain ? 'from-red-700 to-red-900 shadow-[0_10px_25px_rgba(185,28,28,0.4)]' : 'from-yellow-300 to-yellow-600 shadow-[0_10px_25px_rgba(234,179,8,0.4)]'}`}>
+            {/* --- FLOATING BADGE (Scaled Up) --- */}
+            <div className="absolute -top-14 left-1/2 -translate-x-1/2 z-30">
+                <div className={`w-28 h-28 rounded-full p-1.5 bg-gradient-to-b ${isTryAgain ? 'from-red-700 to-red-900 shadow-[0_10px_25px_rgba(185,28,28,0.4)]' : 'from-yellow-300 to-yellow-600 shadow-[0_10px_25px_rgba(234,179,8,0.4)]'}`}>
                     <div className="w-full h-full rounded-full bg-red-800 flex items-center justify-center border-4 border-red-900 shadow-inner">
-                        <span className="text-5xl drop-shadow-md filter select-none">{getIcon(prize?.label)}</span>
+                        <span className="text-6xl drop-shadow-md filter select-none">{getIcon(prize?.label)}</span>
                     </div>
                 </div>
             </div>
 
             {/* --- GLASS CARD CONTAINER --- */}
-            <div className={`relative backdrop-blur-xl rounded-3xl p-1 shadow-[0_20px_60px_rgba(0,0,0,0.3)] overflow-hidden border ring-1 ${isTryAgain ? 'bg-red-50/90 border-red-300/60 ring-red-200/50' : 'bg-[#F9F7F2]/80 border-white/60 ring-white/40'}`}>
+            {/* Added min-h to give it vertical presence */}
+            <div className={`relative backdrop-blur-xl rounded-[2rem] p-1 shadow-[0_25px_70px_rgba(0,0,0,0.4)] overflow-hidden border ring-1 ${isTryAgain ? 'bg-red-50/90 border-red-300/60 ring-red-200/50' : 'bg-[#F9F7F2]/80 border-white/60 ring-white/40'}`}>
                 
                 {/* GLASS SHINE */}
                 <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/40 via-transparent to-transparent pointer-events-none z-10"></div>
 
                 {/* DECORATIVE INNER BORDER */}
-                <div className={`absolute inset-2 border rounded-2xl z-0 pointer-events-none ${isTryAgain ? 'border-red-500/20' : 'border-red-900/10'}`}></div>
+                <div className={`absolute inset-2 border rounded-[1.5rem] z-0 pointer-events-none ${isTryAgain ? 'border-red-500/20' : 'border-red-900/10'}`}></div>
                 
                 {/* PAPER TEXTURE */}
                 <div className="absolute inset-0 z-0 opacity-[0.2] pointer-events-none mix-blend-multiply" 
@@ -147,55 +148,55 @@ const WinModal = ({ isOpen, prize, onClose }) => {
 
                 {/* Rotating Rays */}
                 <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
-                    <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] animate-spin-slow rounded-full ${isTryAgain ? 'bg-[conic-gradient(from_0deg,transparent_0deg,rgba(220,38,38,0.1)_20deg,transparent_40deg,rgba(220,38,38,0.1)_60deg,transparent_80deg,rgba(220,38,38,0.1)_100deg,transparent_120deg,rgba(220,38,38,0.1)_140deg,transparent_160deg,rgba(220,38,38,0.1)_180deg,transparent_200deg,rgba(220,38,38,0.1)_220deg,transparent_240deg,rgba(220,38,38,0.1)_260deg,transparent_280deg,rgba(220,38,38,0.1)_300deg,transparent_320deg,rgba(220,38,38,0.1)_340deg,transparent_360deg)]' : 'bg-[conic-gradient(from_0deg,transparent_0deg,rgba(251,191,36,0.1)_20deg,transparent_40deg,rgba(251,191,36,0.1)_60deg,transparent_80deg,rgba(251,191,36,0.1)_100deg,transparent_120deg,rgba(251,191,36,0.1)_140deg,transparent_160deg,rgba(251,191,36,0.1)_180deg,transparent_200deg,rgba(251,191,36,0.1)_220deg,transparent_240deg,rgba(251,191,36,0.1)_260deg,transparent_280deg,rgba(251,191,36,0.1)_300deg,transparent_320deg,rgba(251,191,36,0.1)_340deg,transparent_360deg)]'}`}></div>
+                    <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] animate-spin-slow rounded-full ${isTryAgain ? 'bg-[conic-gradient(from_0deg,transparent_0deg,rgba(220,38,38,0.1)_20deg,transparent_40deg,rgba(220,38,38,0.1)_60deg,transparent_80deg,rgba(220,38,38,0.1)_100deg,transparent_120deg,rgba(220,38,38,0.1)_140deg,transparent_160deg,rgba(220,38,38,0.1)_180deg,transparent_200deg,rgba(220,38,38,0.1)_220deg,transparent_240deg,rgba(220,38,38,0.1)_260deg,transparent_280deg,rgba(220,38,38,0.1)_300deg,transparent_320deg,rgba(220,38,38,0.1)_340deg,transparent_360deg)]' : 'bg-[conic-gradient(from_0deg,transparent_0deg,rgba(251,191,36,0.1)_20deg,transparent_40deg,rgba(251,191,36,0.1)_60deg,transparent_80deg,rgba(251,191,36,0.1)_100deg,transparent_120deg,rgba(251,191,36,0.1)_140deg,transparent_160deg,rgba(251,191,36,0.1)_180deg,transparent_200deg,rgba(251,191,36,0.1)_220deg,transparent_240deg,rgba(251,191,36,0.1)_260deg,transparent_280deg,rgba(251,191,36,0.1)_300deg,transparent_320deg,rgba(251,191,36,0.1)_340deg,transparent_360deg)]'}`}></div>
                 </div>
 
-                {/* INNER CONTENT */}
-                <div className="relative z-20 p-7 pt-16 rounded-3xl">
+                {/* INNER CONTENT - Increased Padding */}
+                <div className="relative z-20 px-8 pb-10 pt-20 rounded-3xl">
                     
-                    <h2 className="text-3xl font-black tracking-tighter mb-1 font-sans text-transparent bg-clip-text bg-gradient-to-br from-red-800 to-red-600 drop-shadow-sm uppercase">
+                    <h2 className="text-4xl font-black tracking-tighter mb-2 font-sans text-transparent bg-clip-text bg-gradient-to-br from-red-800 to-red-600 drop-shadow-sm uppercase">
                         {isTryAgain ? "TRY AGAIN!" : "CONGRATULATIONS!"}
                     </h2>
                     
                     {/* Fun Phrase Header */}
-                    <div className="flex items-center justify-center gap-2 mb-6 opacity-80">
-                         <div className="h-[1px] w-4 bg-red-800"></div>
-                         <p className="text-red-900 text-[10px] md:text-[11px] tracking-[0.1em] uppercase font-bold font-sans text-center px-1">
+                    <div className="flex items-center justify-center gap-3 mb-8 opacity-80">
+                         <div className="h-[1px] w-6 bg-red-800"></div>
+                         <p className="text-red-900 text-xs tracking-[0.15em] uppercase font-bold font-sans text-center px-1">
                             {getPhrase(prize?.label)}
                          </p>
-                         <div className="h-[1px] w-4 bg-red-800"></div>
+                         <div className="h-[1px] w-6 bg-red-800"></div>
                     </div>
                     
-                    {/* Prize Box */}
+                    {/* Prize Box - Scaled Up */}
                     <motion.div 
-                        className={`py-6 px-4 backdrop-blur-sm rounded-xl border shadow-[0_4px_20px_rgba(0,0,0,0.15)] mb-8 relative overflow-hidden group flex flex-col items-center justify-center gap-2 ${isTryAgain ? 'bg-red-100/40 border-red-300/50 shadow-red-900/10' : 'bg-white/60 border-yellow-200/50 shadow-yellow-500/10'}`}
+                        className={`py-8 px-6 backdrop-blur-sm rounded-2xl border shadow-[0_4px_25px_rgba(0,0,0,0.1)] mb-10 relative overflow-hidden group flex flex-col items-center justify-center gap-3 ${isTryAgain ? 'bg-red-100/40 border-red-300/50 shadow-red-900/10' : 'bg-white/60 border-yellow-200/50 shadow-yellow-500/10'}`}
                         initial={{ scale: 0.9 }}
                         animate={{ scale: 1 }}
                         transition={{ delay: 0.2 }}
                     >
-                        <div className={`absolute inset-1 border border-dashed rounded-lg ${isTryAgain ? 'border-red-500/30' : 'border-yellow-500/30'}`}></div>
+                        <div className={`absolute inset-1 border border-dashed rounded-xl ${isTryAgain ? 'border-red-500/30' : 'border-yellow-500/30'}`}></div>
                         
                         <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${isTryAgain ? 'bg-red-500/10' : 'bg-yellow-500/10'}`}></div>
                         
-                        {/* Prize Label */}
-                        <span className={`relative z-10 text-2xl md:text-3xl font-black tracking-widest uppercase font-sans ${isTryAgain ? 'text-red-900' : 'text-gray-800'}`}>
+                        {/* Prize Label - Bigger Font */}
+                        <span className={`relative z-10 text-3xl md:text-4xl font-black tracking-widest uppercase font-sans ${isTryAgain ? 'text-red-900' : 'text-gray-800'}`}>
                             {prize?.label}
                         </span>
 
                         {/* Description Sentence */}
-                        <span className={`relative z-10 text-[10px] md:text-xs font-bold uppercase tracking-wider ${isTryAgain ? 'text-red-800/60' : 'text-gray-500'}`}>
+                        <span className={`relative z-10 text-xs md:text-sm font-bold uppercase tracking-wider ${isTryAgain ? 'text-red-800/60' : 'text-gray-500'}`}>
                            {getDescription(prize?.label)}
                         </span>
                     </motion.div>
 
                     <button 
                         onClick={onClose}
-                        className="w-full py-4 bg-gradient-to-r from-red-700 to-red-600 text-white font-bold rounded-xl text-xs tracking-[0.2em] shadow-lg shadow-red-500/30 hover:shadow-red-500/50 hover:scale-[1.02] active:scale-95 transition-all duration-300 border-t border-red-500 font-sans"
+                        className="w-full py-5 bg-gradient-to-r from-red-700 to-red-600 text-white font-bold rounded-2xl text-sm tracking-[0.25em] shadow-xl shadow-red-500/30 hover:shadow-red-500/50 hover:scale-[1.02] active:scale-95 transition-all duration-300 border-t border-red-500 font-sans"
                     >
                         {isTryAgain ? "SPIN AGAIN" : "CLAIM REWARD"}
                     </button>
                     
-                    <p className="mt-4 text-[9px] text-gray-500 font-sans italic">Tap anywhere to close</p>
+                    <p className="mt-5 text-[10px] text-gray-500 font-sans italic">Tap anywhere to close</p>
                 </div>
             </div>
 
